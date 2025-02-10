@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 
 // Replace with your Stripe test publishable key
-const stripePromise = loadStripe('your-publishable-key')
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
