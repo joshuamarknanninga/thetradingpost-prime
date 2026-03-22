@@ -1,6 +1,10 @@
 {
-  "name": "The Trading Post",
-  "short_name": "Trading Post",
+  "name": "The Trading Post Prime",
+  "short_name": "TradingPost",
+  "description": "Responsive local marketplace for wares, lessons, preparedness, services, and barter-ready checkout.",
+  "theme_color": "#08111f",
+  "background_color": "#08111f",
+  "display": "standalone",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -12,9 +16,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  ]
 }

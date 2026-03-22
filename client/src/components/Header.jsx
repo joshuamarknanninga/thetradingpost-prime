@@ -1,50 +1,60 @@
-import { Navbar, Form, Button, Badge } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { FaCoins, FaCreditCard, FaMobileAlt, FaStore } from 'react-icons/fa';
+
+const navItems = [
+  { label: 'Marketplace', to: '/' },
+  { label: 'Featured Listing', to: '/product/featured' },
+  { label: 'Checkout', to: '/cart' },
+  { label: 'Join & Sell', to: '/sell' },
+];
 
 const Header = () => {
-  const cartItemsCount = 3; // Replace with real cart state
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
-      <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>EggsMarket</Navbar.Brand>
-        </LinkContainer>
-        
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Form className="d-flex mx-auto" style={{ width: '600px' }}>
-            <Form.Control
-              type="search"
-              placeholder="Search for eggs (organic, free-range, etc.)"
-              className="me-2"
-            />
-            <Button variant="warning">Search</Button>
-          </Form>
+    <header className="site-header">
+      <div className="container header-inner">
+        <NavLink to="/" className="brand-mark" onClick={() => setMenuOpen(false)}>
+          <span className="brand-icon"><FaStore /></span>
+          <span>
+            <strong>The Trading Post Prime</strong>
+            <small>eBay + Amazon + Waze inspired local exchange</small>
+          </span>
+        </NavLink>
 
-          <div className="d-flex">
-            <LinkContainer to="/cart">
-              <Button variant="outline-light" className="me-2">
-                <FaShoppingCart /> Cart
-                {cartItemsCount > 0 && (
-                  <Badge bg="danger" className="ms-1">
-                    {cartItemsCount}
-                  </Badge>
-                )}
-              </Button>
-            </LinkContainer>
+        <button
+          type="button"
+          className="menu-toggle"
+          aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
 
-            <LinkContainer to="/login">
-              <Button variant="outline-light">
-                <FaUser /> Sign In
-              </Button>
-            </LinkContainer>
-          </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        <nav className={`site-nav ${menuOpen ? 'open' : ''}`}>
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="header-pills">
+          <span><FaMobileAlt /> Android • iPhone • Desktop</span>
+          <span><FaCreditCard /> Cards + Cash App</span>
+          <span><FaCoins /> Crypto + Trade</span>
+        </div>
+      </div>
+    </header>
   );
 };
 

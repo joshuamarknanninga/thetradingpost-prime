@@ -1,151 +1,67 @@
-import { Button, Table, Container, Row, Col, Form } from 'react-bootstrap';
-import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaBitcoin, FaCreditCard, FaHandHoldingUsd, FaQrcode, FaTools } from 'react-icons/fa';
+
+const checkoutMethods = [
+  {
+    title: 'Cash App pickup pay',
+    icon: <FaQrcode />,
+    detail: 'Ideal for local meetups, same-day delivery, and mobile-first orders.',
+  },
+  {
+    title: 'Credit / debit cards',
+    icon: <FaCreditCard />,
+    detail: 'Familiar mainstream checkout for fast conversion and trust.',
+  },
+  {
+    title: 'Cryptocurrency',
+    icon: <FaBitcoin />,
+    detail: 'Enable BTC, ETH, or stablecoin acceptance for modern buyers.',
+  },
+  {
+    title: 'Trade submission',
+    icon: <FaTools />,
+    detail: 'Let buyers propose wares, services, lessons, or prep supplies in exchange.',
+  },
+];
 
 const CartPage = () => {
-  // Sample cart data - replace with real state management
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Organic Free-Range Eggs',
-      price: 4.99,
-      quantity: 2,
-      image: '/images/eggs-organic.jpg'
-    },
-    {
-      id: 2,
-      name: 'Pasture-Raised Omega-3 Eggs',
-      price: 5.49,
-      quantity: 1,
-      image: '/images/eggs-omega.jpg'
-    }
-  ]);
-
-  const handleQuantityChange = (itemId, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const handleRemoveItem = itemId => {
-    setCartItems(items => items.filter(item => item.id !== itemId));
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 3.99;
-  const tax = subtotal * 0.07;
-  const total = subtotal + shipping + tax;
-
   return (
-    <Container className="my-5">
-      <h1 className="mb-4">Shopping Cart ({cartItems.length} items)</h1>
-      
-      <Row>
-        <Col lg={8}>
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map(item => (
-                <tr key={item.id}>
-                  <td>
-                    <div className="d-flex align-items-center">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-                        className="me-3"
-                      />
-                      {item.name}
-                    </div>
-                  </td>
-                  <td>${item.price.toFixed(2)}</td>
-                  <td>
-                    <div className="d-flex align-items-center gap-2">
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                      >
-                        <FaMinus />
-                      </Button>
-                      <Form.Control
-                        type="number"
-                        value={item.quantity}
-                        min="1"
-                        style={{ width: '70px' }}
-                        onChange={e => handleQuantityChange(item.id, parseInt(e.target.value))}
-                      />
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                      >
-                        <FaPlus />
-                      </Button>
-                    </div>
-                  </td>
-                  <td>${(item.price * item.quantity).toFixed(2)}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleRemoveItem(item.id)}
-                    >
-                      <FaTrash />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-
-        <Col lg={4}>
-          <div className="card p-3 shadow">
-            <h4>Order Summary</h4>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
+    <div className="page-stack">
+      <section className="section-block">
+        <div className="container checkout-layout">
+          <div className="card-surface checkout-summary">
+            <span className="eyebrow">Checkout blueprint</span>
+            <h1>Offer multiple ways to close the deal.</h1>
+            <p>
+              The checkout experience can present standard card flow, Cash App
+              instructions, crypto wallet handoff, and a barter proposal form in the
+              same responsive React experience.
+            </p>
+            <div className="summary-totals">
+              <div><span>Featured bundle</span><strong>$189.00</strong></div>
+              <div><span>Local delivery</span><strong>$12.00</strong></div>
+              <div><span>Platform protection</span><strong>$6.00</strong></div>
+              <div className="summary-total"><span>Order total</span><strong>$207.00</strong></div>
             </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Shipping:</span>
-              <span>${shipping.toFixed(2)}</span>
+            <div className="feature-list compact">
+              <span><FaHandHoldingUsd /> Mobile-friendly payment CTA stack</span>
+              <span><FaTools /> Trade offer intake for goods and services</span>
             </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span>Tax:</span>
-              <span>${tax.toFixed(2)}</span>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between mb-3">
-              <h5>Total:</h5>
-              <h5>${total.toFixed(2)}</h5>
-            </div>
-            
-            <Form.Group className="mb-3">
-              <Form.Label>Promo Code</Form.Label>
-              <div className="d-flex gap-2">
-                <Form.Control type="text" placeholder="Enter promo code" />
-                <Button variant="outline-secondary">Apply</Button>
-              </div>
-            </Form.Group>
-
-            <Button variant="warning" size="lg" className="w-100">
-              Proceed to Checkout
-            </Button>
           </div>
-        </Col>
-      </Row>
-    </Container>
+
+          <div className="checkout-methods">
+            {checkoutMethods.map((method) => (
+              <article key={method.title} className="card-surface payment-card">
+                <span className="payment-icon">{method.icon}</span>
+                <h2>{method.title}</h2>
+                <p>{method.detail}</p>
+              </article>
+            ))}
+            <Link to="/sell" className="button-primary full-width">Configure seller payment preferences</Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
